@@ -20,13 +20,13 @@ jobs:
           BUILD_NUMBER: ${{ github.run_number }}
         run: |
           ./scripts/build.sh
-          lipo -archs build/SpotifyMini.app/Contents/MacOS/SpotifyMini
+          lipo -archs build/Floatune.app/Contents/MacOS/Floatune
 
       - name: Package
-        run: ditto -c -k --keepParent build/SpotifyMini.app SpotifyMini.zip
+        run: ditto -c -k --keepParent build/Floatune.app Floatune.zip
 
       - uses: actions/upload-artifact@v4
         with:
-          name: SpotifyMini-${{ github.sha }}
-          path: SpotifyMini.zip
+          name: Floatune-${{ github.sha }}
+          path: Floatune.zip
           retention-days: 14

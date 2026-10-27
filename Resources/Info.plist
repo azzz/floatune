@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>dev.yuriyt.SpotifyMini</string>
+	<string>io.github.azzz.floatune</string>
 	<key>CFBundleName</key>
-	<string>SpotifyMini</string>
+	<string>Floatune</string>
 	<key>CFBundleExecutable</key>
-	<string>SpotifyMini</string>
+	<string>Floatune</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -19,6 +19,6 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>SpotifyMini управляет воспроизведением в Spotify и показывает текущий трек.</string>
+	<string>Floatune управляет воспроизведением в Spotify и показывает текущий трек.</string>
 </dict>
 </plist>

@@ -28,7 +28,7 @@ final class HotKey {
     @discardableResult
     func register(_ combo: KeyCombo) -> Bool {
         unregister()
-        let id = EventHotKeyID(signature: OSType(0x534D_4E49), id: 1) // 'SMNI'
+        let id = EventHotKeyID(signature: OSType(0x464C_544E), id: 1) // 'FLTN'
         let status = RegisterEventHotKey(
             combo.keyCode, combo.modifiers, id, GetApplicationEventTarget(), 0, &hotKeyRef
         )

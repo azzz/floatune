@@ -321,7 +321,7 @@ final class AppleScriptRunner: @unchecked Sendable {
         case other(Int)
     }
 
-    private let queue = DispatchQueue(label: "SpotifyMini.AppleScript", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "Floatune.AppleScript", qos: .userInitiated)
     // Touched only on `queue`.
     private var compiled: [String: NSAppleScript] = [:]
 

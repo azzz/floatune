@@ -2,9 +2,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "SpotifyMini",
+    name: "Floatune",
     platforms: [.macOS(.v14)],
     targets: [
-        .executableTarget(name: "SpotifyMini", path: "Sources/SpotifyMini")
+        .executableTarget(name: "Floatune", path: "Sources/Floatune")
     ]
 )

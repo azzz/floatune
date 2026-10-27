@@ -1,5 +1,5 @@
 #!/bin/bash
-# Builds build/SpotifyMini.app.
+# Builds build/Floatune.app.
 #   SIGN_ID       codesigning identity; ad-hoc signature by default
 #   ARCHS         space-separated architectures, e.g. "arm64 x86_64"; host architecture by default
 #   VERSION       CFBundleShortVersionString, e.g. 1.2.0; Info.plist value by default
@@ -14,12 +14,12 @@ for arch in ${ARCHS:-}; do
 done
 # Bash 3.2 treats an empty array as unbound under `set -u`.
 swift build -c release ${ARCH_FLAGS[@]+"${ARCH_FLAGS[@]}"}
-BIN="$(swift build -c release ${ARCH_FLAGS[@]+"${ARCH_FLAGS[@]}"} --show-bin-path)/SpotifyMini"
+BIN="$(swift build -c release ${ARCH_FLAGS[@]+"${ARCH_FLAGS[@]}"} --show-bin-path)/Floatune"
 
-APP=build/SpotifyMini.app
+APP=build/Floatune.app
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS"
-cp "$BIN" "$APP/Contents/MacOS/SpotifyMini"
+cp "$BIN" "$APP/Contents/MacOS/Floatune"
 cp Resources/Info.plist "$APP/Contents/Info.plist"
 
 PLIST="$APP/Contents/Info.plist"
@@ -31,6 +31,6 @@ if [[ -n "${BUILD_NUMBER:-}" ]]; then
 fi
 
 codesign --force --sign "${SIGN_ID:--}" --options runtime \
-    --entitlements Resources/SpotifyMini.entitlements "$APP"
+    --entitlements Resources/Floatune.entitlements "$APP"
 
 echo "Built $APP"

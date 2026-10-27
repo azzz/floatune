@@ -77,7 +77,7 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
         let window = NSWindow(contentViewController: NSHostingController(
             rootView: SettingsView(settings: settings, recorder: recorder)
         ))
-        window.title = "Настройки SpotifyMini"
+        window.title = "Настройки Floatune"
         window.styleMask = [.titled, .closable]
         window.isReleasedWhenClosed = false
         window.delegate = self
