@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        env:
+          ARCHS: arm64 x86_64
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: |
+          ./scripts/build.sh
+          lipo -archs build/SpotifyMini.app/Contents/MacOS/SpotifyMini
+
+      - name: Package
+        run: ditto -c -k --keepParent build/SpotifyMini.app SpotifyMini.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SpotifyMini-${{ github.sha }}
+          path: SpotifyMini.zip
+          retention-days: 14
