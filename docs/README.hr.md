@@ -6,6 +6,11 @@ Mali prozor za upravljanje Spotifyjem na macOS-u. Stoji iznad svih prozora, poja
 
 U prozoru su omot, naziv pjesme i izvođač, gumbi „prethodna”, „pauza” i „sljedeća”, glasnoća u Spotifyju i traka napretka koju možete povući za premotavanje.
 
+<p>
+  <img src="images/panel-1.png" width="340" alt="Floatune ploča">
+  <img src="images/panel-2.png" width="340" alt="Floatune ploča">
+</p>
+
 ## Zahtjevi
 
 - macOS 14 ili noviji
@@ -35,6 +40,8 @@ Pri prvom pokretanju macOS pita smije li Floatune upravljati Spotifyjem. Dopusti
 | Postavke i zatvaranje | Desni klik na prozor |
 
 U postavkama se mijenjaju prečac, odgoda prije zatamnjenja (1–15 s), neprozirnost zatamnjenog prozora (10–90%), pokretanje pri prijavi i jezik sučelja. Promjene vrijede odmah, osim jezika, koji traži ponovno pokretanje.
+
+<img src="images/settings.png" width="440" alt="Floatune postavke">
 
 Klik na prozor ne oduzima fokus aplikaciji u kojoj radite.
 

@@ -6,6 +6,11 @@ O fereastră mică pentru controlul Spotify pe macOS. Stă deasupra tuturor fere
 
 Fereastra arată coperta, titlul piesei și artistul, butoanele „înapoi”, „pauză” și „înainte”, volumul din Spotify și o bară de progres pe care o puteți trage pentru derulare.
 
+<p>
+  <img src="images/panel-1.png" width="340" alt="Panoul Floatune">
+  <img src="images/panel-2.png" width="340" alt="Panoul Floatune">
+</p>
+
 ## Cerințe
 
 - macOS 14 sau mai nou
@@ -35,6 +40,8 @@ La prima lansare macOS întreabă dacă Floatune poate controla Spotify. Permite
 | Configurări și ieșire | Clic dreapta pe fereastră |
 
 În configurări se schimbă combinația de taste, întârzierea până la estompare (1–15 s), opacitatea ferestrei estompate (10–90%), lansarea la autentificare și limba interfeței. Modificările se aplică imediat, cu excepția limbii, care cere repornire.
+
+<img src="images/settings.png" width="440" alt="Configurările Floatune">
 
 Un clic pe fereastră nu ia focusul aplicației în care lucrați.
 

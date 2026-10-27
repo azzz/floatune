@@ -6,6 +6,11 @@ A small window for controlling Spotify on macOS. It floats above all other windo
 
 The window shows the artwork, track title and artist, previous / play-pause / next buttons, Spotify volume, and a progress bar you can drag to seek.
 
+<p>
+  <img src="docs/images/panel-1.png" width="340" alt="Floatune panel">
+  <img src="docs/images/panel-2.png" width="340" alt="Floatune panel">
+</p>
+
 ## Requirements
 
 - macOS 14 or later
@@ -35,6 +40,8 @@ On first launch macOS asks whether Floatune may control Spotify. Allow it. After
 | Settings and Quit | Right-click the window |
 
 Settings cover the hotkey, the delay before dimming (1–15 s), the opacity of the dimmed window (10–90%), launch at login and the interface language. Changes apply immediately, except the language, which needs a restart.
+
+<img src="docs/images/settings.png" width="440" alt="Floatune settings">
 
 Clicking the window doesn't take focus from the app you're working in.
 
