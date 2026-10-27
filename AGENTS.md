@@ -11,11 +11,12 @@ The Command Line Tools ship no SwiftUI macro plugin, so `@State` and other Swift
 
 ## READMEs
 
-`README.md` (English) and `README.ru.md` (Russian) describe the same app in two languages.
+`README.md` is in English. Translations live in `docs/README.<code>.md`, one per app language: `ru`, `uk`, `sr`, `hr`, `ro`. All of them describe the same app.
 
-- Change both files in the same commit. A fact, step, table row or section added to one goes into the other.
+- Change every README in the same commit. A fact, step, table row or section added to one goes into all the others.
 - Keep the headings in the same order, one-to-one.
-- The top line of each file links to the other language.
+- The top line of each file links to every other language. Files in `docs/` link to English as `../README.md`.
+- When you add an app language, add its README too and link it from every top line.
 
 ## Localization
 

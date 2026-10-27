@@ -1,4 +1,4 @@
-English | [Русский](README.ru.md)
+English | [Русский](docs/README.ru.md) | [Українська](docs/README.uk.md) | [Српски](docs/README.sr.md) | [Hrvatski](docs/README.hr.md) | [Română](docs/README.ro.md)
 
 # Floatune
 

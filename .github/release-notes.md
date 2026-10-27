@@ -10,4 +10,4 @@
 
 The default hotkey is ⌃⌥⌘S. Right-click the window for settings.
 
-Инструкция на русском: [README.ru.md](https://github.com/azzz/floatune/blob/main/README.ru.md#установка).
+Другие языки / Other languages: [Русский](https://github.com/azzz/floatune/blob/main/docs/README.ru.md#установка) · [Українська](https://github.com/azzz/floatune/blob/main/docs/README.uk.md#встановлення) · [Српски](https://github.com/azzz/floatune/blob/main/docs/README.sr.md#инсталација) · [Hrvatski](https://github.com/azzz/floatune/blob/main/docs/README.hr.md#instalacija) · [Română](https://github.com/azzz/floatune/blob/main/docs/README.ro.md#instalare)
