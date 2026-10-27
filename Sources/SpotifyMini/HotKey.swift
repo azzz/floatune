@@ -7,9 +7,7 @@ final class HotKey {
     private var handlerRef: EventHandlerRef?
     private let action: () -> Void
 
-    /// `keyCode` is a virtual key code (`kVK_*`), so the hotkey works on any keyboard layout.
-    /// `modifiers` is a mask of Carbon flags (`cmdKey`, `optionKey`, `controlKey`, `shiftKey`).
-    init(keyCode: UInt32, modifiers: UInt32, action: @escaping () -> Void) {
+    init(action: @escaping () -> Void) {
         self.action = action
 
         var eventType = EventTypeSpec(
@@ -24,8 +22,22 @@ final class HotKey {
             MainActor.assumeIsolated { hotKey.action() }
             return noErr
         }, 1, &eventType, userData, &handlerRef)
+    }
 
+    /// Registers `combo` in place of the current one. Returns false if the system refused it.
+    @discardableResult
+    func register(_ combo: KeyCombo) -> Bool {
+        unregister()
         let id = EventHotKeyID(signature: OSType(0x534D_4E49), id: 1) // 'SMNI'
-        RegisterEventHotKey(keyCode, modifiers, id, GetApplicationEventTarget(), 0, &hotKeyRef)
+        let status = RegisterEventHotKey(
+            combo.keyCode, combo.modifiers, id, GetApplicationEventTarget(), 0, &hotKeyRef
+        )
+        return status == noErr
+    }
+
+    func unregister() {
+        guard let hotKeyRef else { return }
+        UnregisterEventHotKey(hotKeyRef)
+        self.hotKeyRef = nil
     }
 }

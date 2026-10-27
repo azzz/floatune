@@ -1,9 +1,9 @@
-import ServiceManagement
 import SwiftUI
 
 /// Panel content: current track, transport buttons and volume.
 struct PlayerView: View {
     let spotify: SpotifyController
+    let openSettings: () -> Void
 
     var body: some View {
         Group {
@@ -116,12 +116,7 @@ struct PlayerView: View {
 
     @ViewBuilder
     private var menu: some View {
-        Toggle("Открывать при входе", isOn: Binding(
-            get: { SMAppService.mainApp.status == .enabled },
-            set: { enabled in
-                try? enabled ? SMAppService.mainApp.register() : SMAppService.mainApp.unregister()
-            }
-        ))
+        Button("Настройки…", action: openSettings)
         Divider()
         Button("Выйти") { NSApp.terminate(nil) }
     }

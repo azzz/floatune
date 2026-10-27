@@ -14,11 +14,13 @@ final class MiniPanel: NSPanel {
     /// Called every time the panel is hidden.
     var onHide: (() -> Void)?
 
+    private let settings: AppSettings
     private var dimTimer: Timer?
     private var isDimmed = false
     private var mouseInside = false
 
-    init(content: NSView) {
+    init(content: NSView, settings: AppSettings) {
+        self.settings = settings
         super.init(
             contentRect: NSRect(origin: .zero, size: Self.size),
             styleMask: [.nonactivatingPanel, .borderless],
@@ -87,6 +89,16 @@ final class MiniPanel: NSPanel {
         }
     }
 
+    /// Applies changed dim settings: a dimmed panel takes the new opacity, the timer restarts.
+    func settingsDidChange() {
+        guard isVisible else { return }
+        if isDimmed {
+            alphaValue = settings.dimAlpha
+        } else {
+            scheduleDim()
+        }
+    }
+
     override func sendEvent(_ event: NSEvent) {
         switch event.type {
         case .leftMouseDown, .rightMouseDown, .leftMouseDragged, .scrollWheel:
@@ -121,7 +133,7 @@ final class MiniPanel: NSPanel {
     private func scheduleDim() {
         dimTimer?.invalidate()
         guard !mouseInside else { return }
-        dimTimer = Timer.scheduledTimer(withTimeInterval: Settings.dimDelay, repeats: false) { [weak self] _ in
+        dimTimer = Timer.scheduledTimer(withTimeInterval: settings.dimDelay, repeats: false) { [weak self] _ in
             MainActor.assumeIsolated { self?.dim() }
         }
     }
@@ -131,7 +143,7 @@ final class MiniPanel: NSPanel {
         isDimmed = true
         NSAnimationContext.runAnimationGroup { context in
             context.duration = 0.4
-            animator().alphaValue = Settings.dimAlpha
+            animator().alphaValue = settings.dimAlpha
         }
     }
 

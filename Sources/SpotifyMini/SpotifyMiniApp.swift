@@ -1,5 +1,4 @@
 import AppKit
-import Carbon.HIToolbox
 
 @main
 @MainActor
@@ -13,18 +12,23 @@ enum SpotifyMiniApp {
     }
 }
 
-/// Owns the panel, the hotkey and the Spotify controller.
+/// Owns the panel, the hotkey, settings and the Spotify controller.
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private let spotify = SpotifyController()
+    private let settings = AppSettings()
+    private let recorder = HotKeyRecorder()
     private var panel: MiniPanel?
     private var hotKey: HotKey?
+    private var registeredCombo: KeyCombo?
+    private lazy var settingsWindow = SettingsWindowController(settings: settings, recorder: recorder)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        Settings.registerDefaults()
-
-        let hosting = FirstMouseHostingView(rootView: PlayerView(spotify: spotify))
-        let panel = MiniPanel(content: hosting)
+        let hosting = FirstMouseHostingView(rootView: PlayerView(
+            spotify: spotify,
+            openSettings: { [weak self] in self?.settingsWindow.show() }
+        ))
+        let panel = MiniPanel(content: hosting, settings: settings)
         panel.onPresent = { [spotify] in
             spotify.isVisible = true
             Task { await spotify.refresh() }
@@ -34,11 +38,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         self.panel = panel
 
-        hotKey = HotKey(
-            keyCode: UInt32(kVK_ANSI_S),
-            modifiers: UInt32(controlKey | optionKey | cmdKey)
-        ) { [weak panel] in
+        hotKey = HotKey { [weak panel] in
             panel?.toggle()
+        }
+        registerHotKey()
+
+        settings.onChange = { [weak self] in
+            guard let self else { return }
+            self.panel?.settingsDidChange()
+            if !self.recorder.isRecording, self.settings.hotKey != self.registeredCombo {
+                self.registerHotKey()
+            }
+        }
+        recorder.onStart = { [weak self] in
+            self?.hotKey?.unregister()
+            self?.registeredCombo = nil
+        }
+        recorder.onStop = { [weak self] in
+            self?.registerHotKey()
         }
 
         spotify.start()
@@ -49,23 +66,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         panel?.present()
         return false
     }
-}
 
-/// User-tunable values stored in UserDefaults.
-enum Settings {
-    static let dimDelayKey = "dimDelay"
-    static let dimAlphaKey = "dimAlpha"
-
-    static func registerDefaults() {
-        UserDefaults.standard.register(defaults: [
-            dimDelayKey: 4.0,
-            dimAlphaKey: 0.35,
-        ])
+    private func registerHotKey() {
+        let combo = settings.hotKey
+        if hotKey?.register(combo) == true {
+            registeredCombo = combo
+            settings.hotKeyError = nil
+        } else {
+            registeredCombo = nil
+            settings.hotKeyError = "Не удалось зарегистрировать \(combo.displayString): сочетание занято."
+        }
     }
-
-    /// Seconds without interaction before the panel dims.
-    static var dimDelay: TimeInterval { UserDefaults.standard.double(forKey: dimDelayKey) }
-
-    /// Panel opacity in the dimmed state.
-    static var dimAlpha: CGFloat { CGFloat(UserDefaults.standard.double(forKey: dimAlphaKey)) }
 }
