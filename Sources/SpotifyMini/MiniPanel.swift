@@ -6,7 +6,7 @@ import SwiftUI
 @MainActor
 final class MiniPanel: NSPanel {
     static let size = NSSize(width: 340, height: 132)
-    private static let autosaveName = "SpotifyMiniPanel"
+    private static let topLeftKey = "panelTopLeft"
     private static let cornerRadius: CGFloat = 14
 
     /// Called every time the panel is shown.
@@ -54,14 +54,10 @@ final class MiniPanel: NSPanel {
         ))
         contentView = background
 
-        if setFrameUsingName(Self.autosaveName) {
-            // The saved frame may come from a build with another panel size; keep its top-left corner.
-            setFrame(NSRect(x: frame.minX, y: frame.maxY - Self.size.height,
-                            width: Self.size.width, height: Self.size.height), display: false)
-        } else {
-            placeAtTopRight()
-        }
-        setFrameAutosaveName(Self.autosaveName)
+        restorePosition()
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(savePosition), name: NSWindow.didMoveNotification, object: self
+        )
     }
 
     override var canBecomeKey: Bool { true }
@@ -145,6 +141,36 @@ final class MiniPanel: NSPanel {
             context.duration = 0.4
             animator().alphaValue = settings.dimAlpha
         }
+    }
+
+    // Not setFrameAutosaveName: AppKit restores a frame only if the saved screen's visible frame
+    // matches exactly, and the built-in display's menu bar height drifts by a pixel between runs.
+    // On a mismatch AppKit moves the window to the main screen.
+    private func restorePosition() {
+        guard let saved = UserDefaults.standard.string(forKey: Self.topLeftKey) else {
+            placeAtTopRight()
+            return
+        }
+        let topLeft = NSPointFromString(saved)
+        let candidate = NSRect(
+            x: topLeft.x, y: topLeft.y - Self.size.height,
+            width: Self.size.width, height: Self.size.height
+        )
+        // Require a draggable piece on some screen, so a disconnected monitor doesn't strand the panel.
+        let reachable = NSScreen.screens.contains { screen in
+            let visible = screen.visibleFrame.intersection(candidate)
+            return visible.width >= 60 && visible.height >= 40
+        }
+        if reachable {
+            setFrameOrigin(candidate.origin)
+        } else {
+            placeAtTopRight()
+        }
+    }
+
+    @objc private func savePosition() {
+        let topLeft = NSPoint(x: frame.minX, y: frame.maxY)
+        UserDefaults.standard.set(NSStringFromPoint(topLeft), forKey: Self.topLeftKey)
     }
 
     private func placeAtTopRight() {
