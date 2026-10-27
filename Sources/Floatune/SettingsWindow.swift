@@ -73,11 +73,24 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
         recorder.stop()
     }
 
+    /// Starts a new copy of the app once this one has quit, then quits.
+    private static func relaunch() {
+        // The new copy must start after this one exits, or its hotkey registration would collide.
+        let task = Process()
+        task.executableURL = URL(fileURLWithPath: "/bin/sh")
+        task.arguments = [
+            "-c", "while kill -0 \"$1\" 2>/dev/null; do sleep 0.1; done; /usr/bin/open \"$2\"",
+            "relaunch", String(ProcessInfo.processInfo.processIdentifier), Bundle.main.bundlePath,
+        ]
+        try? task.run()
+        NSApp.terminate(nil)
+    }
+
     private func makeWindow() -> NSWindow {
         let window = NSWindow(contentViewController: NSHostingController(
-            rootView: SettingsView(settings: settings, recorder: recorder)
+            rootView: SettingsView(settings: settings, recorder: recorder, relaunch: Self.relaunch)
         ))
-        window.title = "Настройки Floatune"
+        window.title = String(localized: "Floatune Settings")
         window.styleMask = [.titled, .closable]
         window.isReleasedWhenClosed = false
         window.delegate = self
@@ -86,30 +99,31 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
     }
 }
 
-/// Hotkey, dimming and login-item settings.
+/// Hotkey, dimming, login-item and language settings.
 struct SettingsView: View {
     let settings: AppSettings
     let recorder: HotKeyRecorder
+    let relaunch: () -> Void
 
     var body: some View {
         Form {
             Section {
-                LabeledContent("Показать / скрыть") {
+                LabeledContent("Show / hide") {
                     HStack(spacing: 8) {
-                        Text(recorder.isRecording ? "Нажмите сочетание…" : settings.hotKey.displayString)
+                        Text(recorder.isRecording ? String(localized: "Press a shortcut…") : settings.hotKey.displayString)
                             .font(.system(size: 12, weight: .medium).monospaced())
                             .foregroundStyle(recorder.isRecording ? .secondary : .primary)
                             .frame(minWidth: 130)
                             .padding(.vertical, 3)
                             .background(RoundedRectangle(cornerRadius: 5).fill(.quaternary))
-                        Button(recorder.isRecording ? "Отмена" : "Изменить") {
+                        Button(recorder.isRecording ? String(localized: "Cancel") : String(localized: "Change")) {
                             if recorder.isRecording {
                                 recorder.stop()
                             } else {
                                 recorder.start(into: settings)
                             }
                         }
-                        Button("Сбросить") { settings.hotKey = .default }
+                        Button("Reset") { settings.hotKey = .default }
                             .disabled(settings.hotKey == .default || recorder.isRecording)
                     }
                 }
@@ -117,43 +131,61 @@ struct SettingsView: View {
                     Text(error).font(.caption).foregroundStyle(.red)
                 }
             } footer: {
-                Text("Сочетание должно включать ⌘, ⌃ или ⌥. F1–F20 можно без модификаторов.")
+                Text("The shortcut must include ⌘, ⌃ or ⌥. F1–F20 work without modifiers.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
-            Section("Когда окно не трогают") {
-                LabeledContent("Тускнеть через") {
+            Section("When idle") {
+                LabeledContent("Dim after") {
                     HStack {
                         Slider(
                             value: Binding(get: { settings.dimDelay }, set: { settings.dimDelay = $0 }),
                             in: 1...15,
                             step: 1
                         )
-                        Text("\(Int(settings.dimDelay)) с")
+                        Text(Duration.seconds(Int(settings.dimDelay)).formatted(.units(allowed: [.seconds], width: .abbreviated)))
                             .monospacedDigit()
-                            .frame(width: 36, alignment: .trailing)
+                            .frame(width: 48, alignment: .trailing)
                     }
                 }
-                LabeledContent("Непрозрачность") {
+                LabeledContent("Opacity") {
                     HStack {
                         Slider(
                             value: Binding(get: { settings.dimAlpha }, set: { settings.dimAlpha = $0 }),
                             in: 0.1...0.9,
                             step: 0.05
                         )
-                        Text("\(Int((settings.dimAlpha * 100).rounded())) %")
+                        Text(settings.dimAlpha.formatted(.percent.precision(.fractionLength(0))))
                             .monospacedDigit()
-                            .frame(width: 36, alignment: .trailing)
+                            .frame(width: 48, alignment: .trailing)
                     }
                 }
             }
 
             Section {
-                Toggle("Открывать при входе", isOn: Binding(
+                Toggle("Open at login", isOn: Binding(
                     get: { settings.launchAtLogin },
                     set: { settings.setLaunchAtLogin($0) }
                 ))
+                Picker("Language", selection: Binding(
+                    get: { settings.language ?? "" },
+                    set: { settings.setLanguage($0.isEmpty ? nil : $0) }
+                )) {
+                    Text("System").tag("")
+                    ForEach(AppSettings.availableLanguages, id: \.self) { code in
+                        Text(verbatim: AppSettings.displayName(of: code)).tag(code)
+                    }
+                }
+                if settings.needsRelaunch {
+                    HStack {
+                        Text("Restart Floatune to apply the language.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button("Restart", action: relaunch)
+                    }
+                }
             }
         }
         .formStyle(.grouped)

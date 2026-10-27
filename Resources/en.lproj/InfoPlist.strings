@@ -1,0 +1,2 @@
+/* Shown by macOS when Floatune first asks to control Spotify */
+"NSAppleEventsUsageDescription" = "Floatune controls playback in Spotify and shows the current track.";

@@ -1,11 +1,13 @@
-## Установка
+## Install
 
-1. Скачайте `Floatune-*.zip`, распакуйте и перенесите `Floatune.app` в «Программы».
-2. Приложение подписано ad-hoc, без Developer ID, поэтому macOS заблокирует первый запуск. Снимите карантин:
+1. Download `Floatune-*.zip`, unzip it and move `Floatune.app` to Applications.
+2. The app has an ad-hoc signature, not a Developer ID, so macOS blocks the first launch. Remove the quarantine flag:
    ```
    xattr -dr com.apple.quarantine /Applications/Floatune.app
    ```
-   Или попробуйте открыть приложение, затем нажмите «Всё равно открыть» в Системных настройках → Конфиденциальность и безопасность.
-3. При первом запуске разрешите Floatune управлять Spotify. После обновления macOS может спросить разрешение ещё раз.
+   Or try to open the app, then click "Open Anyway" in System Settings → Privacy & Security.
+3. On first launch, allow Floatune to control Spotify. After an update macOS may ask again.
 
-Хоткей по умолчанию: ⌃⌥⌘S. Настройки открываются правым кликом по окну.
+The default hotkey is ⌃⌥⌘S. Right-click the window for settings.
+
+Инструкция на русском: [README.ru.md](https://github.com/azzz/floatune/blob/main/README.ru.md#установка).

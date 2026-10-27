@@ -1,0 +1,36 @@
+/* Source strings. Keys are the English text used in code; every other language must have the same keys. */
+
+/* Player panel */
+"Spotify isn't running" = "Spotify isn't running";
+"Open Spotify" = "Open Spotify";
+"No access to Spotify" = "No access to Spotify";
+"Allow control in Privacy & Security → Automation" = "Allow control in Privacy & Security → Automation";
+"Open Settings" = "Open Settings";
+"Nothing playing" = "Nothing playing";
+
+/* Panel context menu */
+"Settings…" = "Settings…";
+"Quit" = "Quit";
+
+/* Settings window */
+"Floatune Settings" = "Floatune Settings";
+"Show / hide" = "Show / hide";
+"Press a shortcut…" = "Press a shortcut…";
+"Cancel" = "Cancel";
+"Change" = "Change";
+"Reset" = "Reset";
+"The shortcut must include ⌘, ⌃ or ⌥. F1–F20 work without modifiers." = "The shortcut must include ⌘, ⌃ or ⌥. F1–F20 work without modifiers.";
+"When idle" = "When idle";
+"Dim after" = "Dim after";
+"Opacity" = "Opacity";
+"Open at login" = "Open at login";
+"Language" = "Language";
+"System" = "System";
+"Restart Floatune to apply the language." = "Restart Floatune to apply the language.";
+"Restart" = "Restart";
+
+/* %@ is the shortcut, e.g. ⌃⌥⌘S */
+"Couldn't register %@: the shortcut is taken." = "Couldn't register %@: the shortcut is taken.";
+
+/* Space bar key name in the hotkey field */
+"Space" = "Space";

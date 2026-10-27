@@ -12,6 +12,7 @@ final class AppSettings {
         static let dimAlpha = "dimAlpha"
         static let hotKeyCode = "hotKeyCode"
         static let hotKeyModifiers = "hotKeyModifiers"
+        static let appleLanguages = "AppleLanguages"
     }
 
     /// Seconds without interaction before the panel dims.
@@ -46,6 +47,35 @@ final class AppSettings {
         launchAtLogin = SMAppService.mainApp.status == .enabled
     }
 
+    /// Language code chosen for the app, or nil to follow the system. Applies after relaunch.
+    private(set) var language: String?
+
+    /// Language override the running process started with.
+    @ObservationIgnored let launchLanguage: String?
+
+    var needsRelaunch: Bool { language != launchLanguage }
+
+    func setLanguage(_ code: String?) {
+        // AppleLanguages in the app's own domain overrides the system language list for this app only.
+        if let code {
+            defaults.set([code], forKey: Key.appleLanguages)
+        } else {
+            defaults.removeObject(forKey: Key.appleLanguages)
+        }
+        language = code
+    }
+
+    /// Codes of the languages bundled with the app, from its `.lproj` folders.
+    static var availableLanguages: [String] {
+        Bundle.main.localizations.filter { $0 != "Base" }.sorted()
+    }
+
+    /// Language name in that language itself, e.g. "Русский".
+    static func displayName(of code: String) -> String {
+        let locale = Locale(identifier: code)
+        return locale.localizedString(forIdentifier: code)?.capitalized(with: locale) ?? code
+    }
+
     @ObservationIgnored var onChange: (() -> Void)?
     @ObservationIgnored private let defaults = UserDefaults.standard
 
@@ -63,6 +93,11 @@ final class AppSettings {
             modifiers: UInt32(defaults.integer(forKey: Key.hotKeyModifiers))
         )
         launchAtLogin = SMAppService.mainApp.status == .enabled
+        // `defaults.array` would fall back to the global language list; read the app domain only.
+        let domain = Bundle.main.bundleIdentifier.flatMap { UserDefaults.standard.persistentDomain(forName: $0) }
+        let override = (domain?[Key.appleLanguages] as? [String])?.first
+        language = override
+        launchLanguage = override
     }
 
     private func save(_ value: Any, _ key: String) {
@@ -119,7 +154,7 @@ struct KeyCombo: Equatable {
     ]
 
     private static let specialKeyNames: [Int: String] = [
-        kVK_Space: "Space", kVK_Return: "↩", kVK_Tab: "⇥", kVK_Delete: "⌫",
+        kVK_Space: String(localized: "Space", comment: "Space bar key name in the hotkey field"), kVK_Return: "↩", kVK_Tab: "⇥", kVK_Delete: "⌫",
         kVK_ForwardDelete: "⌦", kVK_Escape: "⎋", kVK_LeftArrow: "←", kVK_RightArrow: "→",
         kVK_UpArrow: "↑", kVK_DownArrow: "↓", kVK_Home: "↖", kVK_End: "↘",
         kVK_PageUp: "⇞", kVK_PageDown: "⇟",

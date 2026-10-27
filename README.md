@@ -1,83 +1,96 @@
+English | [Русский](README.ru.md)
+
 # Floatune
 
-Маленькое окно для управления Spotify на macOS. Висит поверх всех окон, появляется и прячется по хоткею, а когда его не трогают, становится полупрозрачным.
+A small window for controlling Spotify on macOS. It floats above all other windows, shows and hides with a hotkey, and turns translucent when you leave it alone.
 
-В окне: обложка, название трека и артист, кнопки «назад», «пауза» и «вперёд», громкость Spotify и полоса прогресса с перемоткой.
+The window shows the artwork, track title and artist, previous / play-pause / next buttons, Spotify volume, and a progress bar you can drag to seek.
 
-## Требования
+## Requirements
 
-- macOS 14 или новее
-- Десктопный Spotify. Premium не нужен.
+- macOS 14 or later
+- The Spotify desktop app. Premium is not required.
 
-## Установка
+## Install
 
-Скачайте `Floatune-*.zip` из [последнего релиза](https://github.com/azzz/floatune/releases/latest), распакуйте и перенесите `Floatune.app` в «Программы».
+Download `Floatune-*.zip` from the [latest release](https://github.com/azzz/floatune/releases/latest), unzip it and move `Floatune.app` to Applications.
 
-Приложение подписано ad-hoc, без Developer ID, поэтому при первом запуске macOS его заблокирует. Снимите карантин:
+The app has an ad-hoc signature, not a Developer ID, so macOS blocks the first launch. Remove the quarantine flag:
 
 ```
 xattr -dr com.apple.quarantine /Applications/Floatune.app
 ```
 
-Или попробуйте открыть приложение, а потом нажмите «Всё равно открыть» в Системных настройках → Конфиденциальность и безопасность.
+Or try to open the app, then click "Open Anyway" in System Settings → Privacy & Security.
 
-При первом запуске macOS спросит, можно ли Floatune управлять Spotify. Разрешите. После обновления приложения вопрос может повториться: у каждой сборки своя ad-hoc подпись.
+On first launch macOS asks whether Floatune may control Spotify. Allow it. After an update macOS may ask again, because every build has its own ad-hoc signature.
 
-## Как пользоваться
+## Usage
 
-| Действие | Как |
+| Action | How |
 |---|---|
-| Показать или скрыть окно | ⌃⌥⌘S |
-| Вернуть потускневшему окну непрозрачность | Навести курсор или нажать хоткей |
-| Переместить окно | Перетащить за любое место. Позиция сохраняется |
-| Настройки и выход | Правый клик по окну |
+| Show or hide the window | ⌃⌥⌘S |
+| Bring a dimmed window back to full opacity | Hover over it or press the hotkey |
+| Move the window | Drag it anywhere. The position is saved |
+| Settings and Quit | Right-click the window |
 
-В настройках меняются хоткей, задержка перед затуханием (1–15 с), непрозрачность потускневшего окна (10–90%) и автозапуск при входе. Изменения применяются сразу.
+Settings cover the hotkey, the delay before dimming (1–15 s), the opacity of the dimmed window (10–90%), launch at login and the interface language. Changes apply immediately, except the language, which needs a restart.
 
-Клик по окну не забирает фокус у приложения, в котором вы работаете.
+Clicking the window doesn't take focus from the app you're working in.
 
-## Как это работает
+## How it works
 
-Floatune говорит с десктопным Spotify через Apple Events, теми же командами, что доступны из AppleScript. О смене трека Spotify сообщает сам, через системное уведомление `com.spotify.client.PlaybackStateChanged`, поэтому опроса в фоне нет. Spotify Web API не используется. В сеть приложение ходит только за обложками.
+Floatune talks to the Spotify desktop app over Apple Events, the same commands AppleScript uses. Spotify announces track changes itself through the `com.spotify.client.PlaybackStateChanged` system notification, so nothing polls in the background. Floatune doesn't use the Spotify Web API and goes online only to download artwork.
 
-Ограничения:
+Limitations:
 
-- Очереди следующих треков нет. Её отдаёт только Web API, а он требует OAuth и аккаунт разработчика.
-- Слайдер меняет громкость самого Spotify, а не системную.
-- Spotify не присылает уведомление при перемотке. Пока окно видно и трек играет, Floatune перечитывает позицию раз в 5 секунд.
-- Если Spotify закрыт, Floatune его не запускает и предлагает открыть кнопкой.
+- No queue of upcoming tracks. Only the Web API exposes it, and that requires OAuth and a developer account.
+- The slider changes Spotify's own volume, not the system volume.
+- Spotify sends no notification on seek. While the window is visible and a track is playing, Floatune re-reads the position every 5 seconds.
+- If Spotify is closed, Floatune doesn't launch it and offers a button to open it.
 
-## Сборка из исходников
+## Languages
 
-Хватит Command Line Tools, Xcode не нужен.
+Floatune ships in English and Russian and follows the system language. To pick another one, right-click the window → Settings… → Language, then click Restart.
+
+### Add a language
+
+1. Copy `Resources/en.lproj` to `Resources/<code>.lproj`, where `<code>` is the language code: `de`, `uk`, `pt-BR`.
+2. Translate the values in `Localizable.strings` and `InfoPlist.strings`. Leave the keys on the left untouched and keep every `%@` placeholder.
+3. Run `python3 scripts/check_strings.py`. It fails if a key is missing or extra, or if a translation changes the placeholders.
+4. Build the app. The new language shows up in Settings → Language by itself; pick it and check every screen.
+
+## Build from source
+
+The Command Line Tools are enough; Xcode isn't required.
 
 ```
 ./scripts/build.sh
 open build/Floatune.app
 ```
 
-Скрипт понимает переменные окружения:
+The script reads these environment variables:
 
-| Переменная | Что задаёт | По умолчанию |
+| Variable | Sets | Default |
 |---|---|---|
-| `ARCHS` | Архитектуры через пробел, например `"arm64 x86_64"` | Архитектура вашего Mac |
-| `VERSION` | `CFBundleShortVersionString` | Значение из `Resources/Info.plist` |
-| `BUILD_NUMBER` | `CFBundleVersion` | Значение из `Resources/Info.plist` |
-| `SIGN_ID` | Сертификат для подписи | Ad-hoc подпись |
+| `ARCHS` | Space-separated architectures, e.g. `"arm64 x86_64"` | Your Mac's architecture |
+| `VERSION` | `CFBundleShortVersionString` | Value from `Resources/Info.plist` |
+| `BUILD_NUMBER` | `CFBundleVersion` | Value from `Resources/Info.plist` |
+| `SIGN_ID` | Codesigning certificate | Ad-hoc signature |
 
-Собранное локально приложение Gatekeeper не проверяет: карантин ставится только на скачанные файлы.
+Gatekeeper doesn't check an app you built locally: macOS sets the quarantine flag only on downloaded files.
 
-## Релизы
+## Releases
 
-CI собирает universal-сборку на каждый push в `main` и на каждый pull request. Чтобы выпустить релиз, запушьте тег:
+CI checks translations and builds a universal app on every push to `main` and every pull request. To publish a release, push a tag:
 
 ```
 git tag v0.2.0
 git push origin v0.2.0
 ```
 
-Workflow соберёт приложение с версией из тега и опубликует GitHub Release с zip-архивом.
+The workflow builds the app with the version from the tag and publishes a GitHub Release with the zip.
 
 ---
 
-Floatune не связан со Spotify AB. Spotify — товарный знак Spotify AB.
+Floatune is not affiliated with Spotify AB. Spotify is a trademark of Spotify AB.

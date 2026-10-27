@@ -13,6 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check localizations
+        run: python3 scripts/check_strings.py
+
       - name: Build
         env:
           ARCHS: arm64 x86_64

@@ -74,7 +74,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             settings.hotKeyError = nil
         } else {
             registeredCombo = nil
-            settings.hotKeyError = "Не удалось зарегистрировать \(combo.displayString): сочетание занято."
+            settings.hotKeyError = String(localized: "Couldn't register \(combo.displayString): the shortcut is taken.")
         }
     }
 }

@@ -10,15 +10,15 @@ struct PlayerView: View {
             switch spotify.status {
             case .notRunning:
                 message(
-                    title: "Spotify не запущен",
+                    title: "Spotify isn't running",
                     detail: nil,
-                    action: ("Открыть Spotify", spotify.launchSpotify)
+                    action: ("Open Spotify", spotify.launchSpotify)
                 )
             case .noPermission:
                 message(
-                    title: "Нет доступа к Spotify",
-                    detail: "Разрешите управление в Конфиденциальность → Автоматизация",
-                    action: ("Открыть настройки", spotify.openAutomationSettings)
+                    title: "No access to Spotify",
+                    detail: "Allow control in Privacy & Security → Automation",
+                    action: ("Open Settings", spotify.openAutomationSettings)
                 )
             case .ready:
                 player
@@ -45,7 +45,7 @@ struct PlayerView: View {
 
     private func details(snapshot: PlayerSnapshot?, stopped: Bool) -> some View {
         VStack(alignment: .leading, spacing: 3) {
-            Text(stopped ? "Ничего не играет" : snapshot?.title ?? "")
+            Text(stopped ? String(localized: "Nothing playing") : snapshot?.title ?? "")
                 .font(.system(size: 13, weight: .semibold))
                 .lineLimit(1)
             Text(stopped ? " " : snapshot?.artist ?? "")
@@ -100,7 +100,11 @@ struct PlayerView: View {
         .buttonStyle(.plain)
     }
 
-    private func message(title: String, detail: String?, action: (String, () -> Void)) -> some View {
+    private func message(
+        title: LocalizedStringKey,
+        detail: LocalizedStringKey?,
+        action: (LocalizedStringKey, () -> Void)
+    ) -> some View {
         VStack(spacing: 6) {
             Text(title).font(.system(size: 13, weight: .semibold))
             if let detail {
@@ -116,9 +120,9 @@ struct PlayerView: View {
 
     @ViewBuilder
     private var menu: some View {
-        Button("Настройки…", action: openSettings)
+        Button("Settings…", action: openSettings)
         Divider()
-        Button("Выйти") { NSApp.terminate(nil) }
+        Button("Quit") { NSApp.terminate(nil) }
     }
 }
 

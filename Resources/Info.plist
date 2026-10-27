@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
 	<key>CFBundleIdentifier</key>
 	<string>io.github.azzz.floatune</string>
 	<key>CFBundleName</key>
@@ -19,6 +21,6 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>Floatune управляет воспроизведением в Spotify и показывает текущий трек.</string>
+	<string>Floatune controls playback in Spotify and shows the current track.</string>
 </dict>
 </plist>

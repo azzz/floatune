@@ -1,0 +1,34 @@
+/* Player panel */
+"Spotify isn't running" = "Spotify не запущен";
+"Open Spotify" = "Открыть Spotify";
+"No access to Spotify" = "Нет доступа к Spotify";
+"Allow control in Privacy & Security → Automation" = "Разрешите управление в Конфиденциальность и безопасность → Автоматизация";
+"Open Settings" = "Открыть настройки";
+"Nothing playing" = "Ничего не играет";
+
+/* Panel context menu */
+"Settings…" = "Настройки…";
+"Quit" = "Выйти";
+
+/* Settings window */
+"Floatune Settings" = "Настройки Floatune";
+"Show / hide" = "Показать / скрыть";
+"Press a shortcut…" = "Нажмите сочетание…";
+"Cancel" = "Отмена";
+"Change" = "Изменить";
+"Reset" = "Сбросить";
+"The shortcut must include ⌘, ⌃ or ⌥. F1–F20 work without modifiers." = "Сочетание должно включать ⌘, ⌃ или ⌥. F1–F20 можно без модификаторов.";
+"When idle" = "Когда окно не трогают";
+"Dim after" = "Тускнеть через";
+"Opacity" = "Непрозрачность";
+"Open at login" = "Открывать при входе";
+"Language" = "Язык";
+"System" = "Как в системе";
+"Restart Floatune to apply the language." = "Перезапустите Floatune, чтобы сменить язык.";
+"Restart" = "Перезапустить";
+
+/* %@ is the shortcut, e.g. ⌃⌥⌘S */
+"Couldn't register %@: the shortcut is taken." = "Не удалось зарегистрировать %@: сочетание занято.";
+
+/* Space bar key name in the hotkey field */
+"Space" = "Пробел";
