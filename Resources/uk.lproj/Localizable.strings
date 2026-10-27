@@ -1,0 +1,34 @@
+/* Player panel */
+"Spotify isn't running" = "Spotify не запущено";
+"Open Spotify" = "Відкрити Spotify";
+"No access to Spotify" = "Немає доступу до Spotify";
+"Allow control in Privacy & Security → Automation" = "Дозвольте керування в Приватність і безпека → Автоматизація";
+"Open Settings" = "Відкрити параметри";
+"Nothing playing" = "Нічого не грає";
+
+/* Panel context menu */
+"Settings…" = "Параметри…";
+"Quit" = "Вийти";
+
+/* Settings window */
+"Floatune Settings" = "Параметри Floatune";
+"Show / hide" = "Показати / сховати";
+"Press a shortcut…" = "Натисніть комбінацію…";
+"Cancel" = "Скасувати";
+"Change" = "Змінити";
+"Reset" = "Скинути";
+"The shortcut must include ⌘, ⌃ or ⌥. F1–F20 work without modifiers." = "Комбінація має містити ⌘, ⌃ або ⌥. F1–F20 працюють без модифікаторів.";
+"When idle" = "Коли вікно не чіпають";
+"Dim after" = "Тьмяніти через";
+"Opacity" = "Непрозорість";
+"Open at login" = "Відкривати під час входу";
+"Language" = "Мова";
+"System" = "Як у системі";
+"Restart Floatune to apply the language." = "Перезапустіть Floatune, щоб змінити мову.";
+"Restart" = "Перезапустити";
+
+/* %@ is the shortcut, e.g. ⌃⌥⌘S */
+"Couldn't register %@: the shortcut is taken." = "Не вдалося зареєструвати %@: комбінація зайнята.";
+
+/* Space bar key name in the hotkey field */
+"Space" = "Пробіл";

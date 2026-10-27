@@ -1,0 +1,2 @@
+/* Shown by macOS when Floatune first asks to control Spotify */
+"NSAppleEventsUsageDescription" = "Floatune управља репродукцијом у Spotify-ју и приказује тренутну песму.";

@@ -51,11 +51,11 @@ Limitations:
 
 ## Languages
 
-Floatune ships in English and Russian and follows the system language. To pick another one, right-click the window → Settings… → Language, then click Restart.
+Floatune ships in English, Russian, Ukrainian, Serbian (Cyrillic), Croatian and Romanian and follows the system language. To pick another one, right-click the window → Settings… → Language, then click Restart.
 
 ### Add a language
 
-1. Copy `Resources/en.lproj` to `Resources/<code>.lproj`, where `<code>` is the language code: `de`, `uk`, `pt-BR`.
+1. Copy `Resources/en.lproj` to `Resources/<code>.lproj`, where `<code>` is the language code: `de`, `pl`, `pt-BR`.
 2. Translate the values in `Localizable.strings` and `InfoPlist.strings`. Leave the keys on the left untouched and keep every `%@` placeholder.
 3. Run `python3 scripts/check_strings.py`. It fails if a key is missing or extra, or if a translation changes the placeholders.
 4. Build the app. The new language shows up in Settings → Language by itself; pick it and check every screen.

@@ -1,0 +1,34 @@
+/* Player panel */
+"Spotify isn't running" = "Spotify није покренут";
+"Open Spotify" = "Отвори Spotify";
+"No access to Spotify" = "Нема приступа Spotify-ју";
+"Allow control in Privacy & Security → Automation" = "Дозволите управљање у Приватност и безбедност → Аутоматизација";
+"Open Settings" = "Отвори подешавања";
+"Nothing playing" = "Ништа се не репродукује";
+
+/* Panel context menu */
+"Settings…" = "Подешавања…";
+"Quit" = "Изађи";
+
+/* Settings window */
+"Floatune Settings" = "Floatune подешавања";
+"Show / hide" = "Прикажи / сакриј";
+"Press a shortcut…" = "Притисните пречицу…";
+"Cancel" = "Откажи";
+"Change" = "Промени";
+"Reset" = "Ресетуј";
+"The shortcut must include ⌘, ⌃ or ⌥. F1–F20 work without modifiers." = "Пречица мора да садржи ⌘, ⌃ или ⌥. F1–F20 раде без модификатора.";
+"When idle" = "Када се не користи";
+"Dim after" = "Затамни после";
+"Opacity" = "Непрозирност";
+"Open at login" = "Отвори при пријављивању";
+"Language" = "Језик";
+"System" = "Као у систему";
+"Restart Floatune to apply the language." = "Поново покрените Floatune да бисте применили језик.";
+"Restart" = "Поново покрени";
+
+/* %@ is the shortcut, e.g. ⌃⌥⌘S */
+"Couldn't register %@: the shortcut is taken." = "Регистрација %@ није успела: пречица је заузета.";
+
+/* Space bar key name in the hotkey field */
+"Space" = "Размак";

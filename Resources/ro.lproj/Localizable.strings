@@ -1,0 +1,34 @@
+/* Player panel */
+"Spotify isn't running" = "Spotify nu rulează";
+"Open Spotify" = "Deschide Spotify";
+"No access to Spotify" = "Fără acces la Spotify";
+"Allow control in Privacy & Security → Automation" = "Permiteți controlul în Confidențialitate și securitate → Automatizare";
+"Open Settings" = "Deschide Configurări";
+"Nothing playing" = "Nu se redă nimic";
+
+/* Panel context menu */
+"Settings…" = "Configurări…";
+"Quit" = "Ieși";
+
+/* Settings window */
+"Floatune Settings" = "Configurări Floatune";
+"Show / hide" = "Afișează / ascunde";
+"Press a shortcut…" = "Apăsați o combinație…";
+"Cancel" = "Anulează";
+"Change" = "Schimbă";
+"Reset" = "Resetează";
+"The shortcut must include ⌘, ⌃ or ⌥. F1–F20 work without modifiers." = "Combinația trebuie să includă ⌘, ⌃ sau ⌥. F1–F20 funcționează fără modificatori.";
+"When idle" = "Când e inactiv";
+"Dim after" = "Estompează după";
+"Opacity" = "Opacitate";
+"Open at login" = "Deschide la autentificare";
+"Language" = "Limbă";
+"System" = "Ca în sistem";
+"Restart Floatune to apply the language." = "Reporniți Floatune pentru a aplica limba.";
+"Restart" = "Repornește";
+
+/* %@ is the shortcut, e.g. ⌃⌥⌘S */
+"Couldn't register %@: the shortcut is taken." = "Nu s-a putut înregistra %@: combinația este ocupată.";
+
+/* Space bar key name in the hotkey field */
+"Space" = "Spațiu";
