@@ -4,11 +4,13 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>Floatune</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>io.github.azzz.floatune</string>
 	<key>CFBundleName</key>
-	<string>Floatune</string>
-	<key>CFBundleExecutable</key>
 	<string>Floatune</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
