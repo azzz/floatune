@@ -8,6 +8,7 @@
 
 /* Panel context menu */
 "Settings…" = "Настройки…";
+"Close Window" = "Закрыть окно";
 "Quit" = "Выйти";
 
 /* Settings window */

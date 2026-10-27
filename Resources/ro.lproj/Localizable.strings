@@ -8,6 +8,7 @@
 
 /* Panel context menu */
 "Settings…" = "Configurări…";
+"Close Window" = "Închide fereastra";
 "Quit" = "Ieși";
 
 /* Settings window */

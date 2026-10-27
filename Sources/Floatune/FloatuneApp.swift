@@ -58,6 +58,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.registerHotKey()
         }
 
+        NSApp.mainMenu = makeMainMenu()
         spotify.start()
         panel.present()
     }
@@ -65,6 +66,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         panel?.present()
         return false
+    }
+
+    // An accessory app shows no menu bar, but AppKit still matches key equivalents against the main menu.
+    private func makeMainMenu() -> NSMenu {
+        let appMenu = NSMenu()
+        appMenu.addItem(
+            withTitle: String(localized: "Close Window"), action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w"
+        )
+        appMenu.addItem(.separator())
+        appMenu.addItem(
+            withTitle: String(localized: "Quit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"
+        )
+
+        let appItem = NSMenuItem()
+        appItem.submenu = appMenu
+        let mainMenu = NSMenu()
+        mainMenu.addItem(appItem)
+        return mainMenu
     }
 
     private func registerHotKey() {

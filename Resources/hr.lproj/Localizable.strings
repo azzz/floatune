@@ -8,6 +8,7 @@
 
 /* Panel context menu */
 "Settings…" = "Postavke…";
+"Close Window" = "Zatvori prozor";
 "Quit" = "Zatvori";
 
 /* Settings window */
